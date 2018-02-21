@@ -12,6 +12,11 @@ public class BookParserLoggable{
         _loggers = loggers;
     }
 
+    /**
+     * parses csv string to Book, logs exceptions
+     * @param book book in scv string
+     * @return Book instance
+     */
     public Book Parse(String book){
         Book result=null;
         try{

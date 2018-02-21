@@ -11,6 +11,12 @@ public class BookParser{
 
     private static final String ERRORMESSAGE="Invalid book data! ";
 
+    /**
+     * parses csv string to Book
+     * @param bookStr csv string
+     * @return Book instance
+     * @throws Exception exception that appears during parsing
+     */
     public static Book parse(String bookStr) throws Exception {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = CsvSchema.builder()
@@ -35,7 +41,7 @@ public class BookParser{
                 || book.instanceCount<0)
             throw new Exception(ERRORMESSAGE+bookStr);
 
-        if(book.publishYear!=null && book.publishYear> Year.now().getValue())
+        if(book.publishYear!=null && (book.publishYear> Year.now().getValue() || book.publishYear<0))
             throw new Exception(ERRORMESSAGE+bookStr);
 
         return book;

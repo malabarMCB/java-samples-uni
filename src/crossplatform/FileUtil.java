@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtil {
+    /**
+     * writes line to file
+     * @param text line
+     * @param filePath path to file
+     */
     public static void writeLine(String text, String filePath) {
         BufferedWriter bw = null;
 
@@ -40,6 +45,12 @@ public class FileUtil {
 
     }
 
+    /**
+     * reads all lines from file
+     * @param filePath path to file
+     * @param startLine line from which we start reading
+     * @return strings from file
+     */
     static List<String> readAllLines(String filePath, int startLine) {
         List<String> result = new ArrayList<>();
         BufferedReader br=null;

@@ -1,10 +1,12 @@
 package crossplatform.Books;
 
 public class IdentifiedBook extends Book implements Comparable<IdentifiedBook>{
-    public static int id;
+    private static int _counter;
+    public int id;
 
     public IdentifiedBook() {
-        id++;
+        _counter++;
+        id= _counter;
     }
 
     @Override
