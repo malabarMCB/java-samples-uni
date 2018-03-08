@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import crossplatform.fx.BookView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="crossplatform.fx.Controller">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+
+    <Label style="-fx-font: NORMAL 20 Tahoma;" text="Books"
+           GridPane.columnIndex="0" GridPane.rowIndex="0">
+    </Label>
+
+    <TableView fx:id="bookTableView" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <columns>
+            <TableColumn fx:id="udcColumn" text="UDC">
+                <cellValueFactory><PropertyValueFactory property="udc" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Author">
+                <cellValueFactory><PropertyValueFactory property="author" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Name">
+                <cellValueFactory><PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Publish year">
+                <cellValueFactory><PropertyValueFactory property="publishYear" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Instance count">
+                <cellValueFactory><PropertyValueFactory property="instanceCount" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Modify">
+            </TableColumn>
+        </columns>
+
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
+                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
+                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
+                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
+            </FXCollections>
+        </items>
+    </TableView>
+
+</GridPane>
+
