@@ -1,61 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
-<?import crossplatform.fx.BookView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.text.Text?>
 <GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="crossplatform.fx.Controller">
-    <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-    </padding>
 
-    <Label style="-fx-font: NORMAL 20 Tahoma;" text="Books"
-           GridPane.columnIndex="0" GridPane.rowIndex="0">
-    </Label>
+    <Button fx:id="chooseCsvBtn" GridPane.rowIndex="1" text="Choose csv file" onAction="#chooseCsvFile"/>
+    <Button fx:id="chooseJsonBtn" GridPane.rowIndex="2" text="Choose json file" onAction="#chooseJsonFile"/>
+    <Button fx:id="chooseLogBtn" GridPane.rowIndex="3" text="Choose log file" onAction="#chooseLogFile"/>
+    <Button fx:id="goBtn" disable="true" GridPane.rowIndex="4" text="GO" onAction="#go"/>
 
-    <TableView fx:id="bookTableView" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <columns>
-            <TableColumn fx:id="udcColumn" text="UDC">
-                <cellValueFactory><PropertyValueFactory property="udc" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Author">
-                <cellValueFactory><PropertyValueFactory property="author" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Name">
-                <cellValueFactory><PropertyValueFactory property="name" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Publish year">
-                <cellValueFactory><PropertyValueFactory property="publishYear" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Instance count">
-                <cellValueFactory><PropertyValueFactory property="instanceCount" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Modify">
-            </TableColumn>
-        </columns>
+    <Label text="UDC :"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="udc" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
-                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
-                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
-                <BookView udc="udc" author="author" name="name" publishYear="1995" instanceCount="5"/>
-            </FXCollections>
-        </items>
-    </TableView>
+    <Label text="Author :"  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="author" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+    <Label text="Name :"  GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <TextField fx:id="name" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+    <Label text="Publish year :"  GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <TextField fx:id="publishYear" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+
+    <Label text="Instance count :"  GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <TextField fx:id="instanceCount" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+
+    <HBox spacing="10" alignment="bottom_right"
+          GridPane.columnIndex="2" GridPane.rowIndex="6">
+        <Button disable="true" text="Modify"
+                onAction="#modify"/>
+    </HBox>
+
+    <FlowPane GridPane.columnIndex="2" GridPane.rowIndex="7" alignment="bottom_center">
+        <Button fx:id="firstItemBtn" disable="true" text="First" onAction="#getFirstItem"/>
+        <Button fx:id="prevItemBtn" disable="true" text="Prev" onAction="#getPrevItem"/>
+        <Button fx:id="nextItemBtn" disable="true" text="Next" onAction="#getNextItem"/>
+        <Button fx:id="lastItemBtn" disable="true" text="Last" onAction="#getLastItem"/>
+    </FlowPane>
+
+    <ScrollPane GridPane.columnIndex="2" GridPane.rowIndex="8">
+        <Text wrappingWidth="400" fx:id="logText"/>
+    </ScrollPane>
 
 </GridPane>
 

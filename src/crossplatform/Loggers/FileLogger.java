@@ -2,11 +2,13 @@ package crossplatform.Loggers;
 
 import crossplatform.FileUtil;
 
-public class FileLogger implements ILog{
-    private String _filePath;
+import java.io.File;
 
-    public FileLogger(String filePath){
-        _filePath=filePath;
+public class FileLogger implements ILog{
+    private String file;
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     /**
@@ -15,6 +17,6 @@ public class FileLogger implements ILog{
      */
     @Override
     public void logError(String text) {
-        FileUtil.writeLine(text,_filePath);
+        FileUtil.writeLine(text, file);
     }
 }

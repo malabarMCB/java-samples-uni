@@ -1,5 +1,7 @@
 package crossplatform;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class FileUtil {
      * @param startLine line from which we start reading
      * @return strings from file
      */
-    static List<String> readAllLines(String filePath, int startLine) {
+    public static List<String> readAllLines(String filePath, int startLine) {
         List<String> result = new ArrayList<>();
         BufferedReader br=null;
 
