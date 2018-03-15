@@ -3,7 +3,6 @@ package crossplatform;
 import crossplatform.BookParser.BookParserLoggable;
 import crossplatform.Books.Book;
 import crossplatform.Books.IdentifiedBook;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,9 +26,8 @@ public class IdentifiedBookRepository {
     }
 
     public void updateBook(IdentifiedBook book){
-        for(int i=0;i<books.size();i++){
-            IdentifiedBook currentBook=books.get(i);
-            if(currentBook.id== book.id){
+        for (IdentifiedBook currentBook : books) {
+            if (currentBook.getId() == book.getId()) {
                 currentBook.setValues(book);
             }
         }

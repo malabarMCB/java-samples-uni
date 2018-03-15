@@ -16,6 +16,7 @@ public class Controller {
     private  IdentifiedBook currentBook;
 
     @FXML private Text logText;
+    @FXML private Button modifyBtn;
 
     //book fields
     @FXML private TextField udc;
@@ -47,11 +48,23 @@ public class Controller {
         bookRepository.readFromCsvFile(csvFilePath);
         getBook();
         goBtn.setDisable(true);
-}
+        if(bookRepository.getBooksCount()>0)
+            modifyBtn.setDisable(false);
+    }
 
     @FXML
     private void modify(ActionEvent actionEvent) {
+        try {
+            currentBook.setUdc(udc.getText());
+            currentBook.setAuthor(author.getText());
+            currentBook.setName(name.getText());
+            currentBook.setPublishYear(Short.parseShort(publishYear.getText()));
+            currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
+        } catch (Exception e) {
+            logText.setText("Unable to modify book! "+e.getMessage());
+        }
 
+        bookRepository.updateBook(currentBook);
     }
 
     @FXML
