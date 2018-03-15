@@ -113,7 +113,7 @@ public class Controller {
         udc.setText(currentBook.udc);
         author.setText(currentBook.author);
         name.setText(currentBook.name);
-        publishYear.setText(currentBook.publishYear.toString());
+        publishYear.setText(currentBook.publishYear==null?"":currentBook.publishYear.toString());
         instanceCount.setText(Integer.toString(currentBook.instanceCount));
     }
 
