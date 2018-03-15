@@ -15,7 +15,7 @@ public class Controller {
     private int currentBookNumber=0;
     private  IdentifiedBook currentBook;
 
-    @FXML private Text logText;
+    @FXML private Text dialogText;
     @FXML private Button modifyBtn;
 
     //book fields
@@ -43,13 +43,24 @@ public class Controller {
     }
 
     @FXML
+    private void initialize(){
+        dialogText.setText("Choose csv and log files to start");
+    }
+
+    @FXML
     private void go(ActionEvent actionEvent){
         String csvFilePath=filesConfigurator.getCsvFilePath();
         bookRepository.readFromCsvFile(csvFilePath);
+        FxTextExtension.appendText(dialogText,"Data loaded!");
         getBook();
         goBtn.setDisable(true);
-        if(bookRepository.getBooksCount()>0)
+        if(bookRepository.getBooksCount()>0){
             modifyBtn.setDisable(false);
+            chooseJsonBtn.setDisable(false);
+        }
+        else{
+            FxTextExtension.appendText(dialogText,"Collection is empty!");
+        }
     }
 
     @FXML
@@ -60,12 +71,12 @@ public class Controller {
             currentBook.setName(name.getText());
             currentBook.setPublishYear(Short.parseShort(publishYear.getText()));
             currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
-        } catch (Exception e) {
-            logText.setText("Unable to modify book! "+e.getMessage());
-            logText.app
-        }
 
-        bookRepository.updateBook(currentBook);
+            bookRepository.updateBook(currentBook);
+            FxTextExtension.appendText(dialogText,"Book updated. ID: "+currentBook.getId());
+        } catch (Exception e) {
+            FxTextExtension.appendText(dialogText,"Unable to modify book! "+e.getMessage());
+        }
     }
 
     @FXML
@@ -96,26 +107,23 @@ public class Controller {
     private void chooseCsvFile(ActionEvent actionEvent) {
         filesConfigurator.chooseCsvFile();
         checkFileBtns();
-    }
-
-    @FXML
-    private void chooseJsonFile(ActionEvent actionEvent) {
-        filesConfigurator.chooseJsonFile();
-        checkFileBtns();
+        FxTextExtension.appendText(dialogText,"CSV file was choosen");
     }
 
     @FXML
     private void chooseLogFile(ActionEvent actionEvent) {
         filesConfigurator.chooseLogFile();
         checkFileBtns();
+        FxTextExtension.appendText(dialogText,"Log file was choosen");
     }
 
     @FXML
-    private void writeToJsonFile(){
+    private void writeToJsonFile(ActionEvent actionEvent){
+        filesConfigurator.chooseJsonFile();
         String jsonFilePath=filesConfigurator.getJsonFilePath();
         bookRepository.writeToFileAsJsonString(jsonFilePath);
+        FxTextExtension.appendText(dialogText,"Collection was written to json");
     }
-
 
     private void getBook(){
         checkNavigationBtns();
@@ -142,7 +150,6 @@ public class Controller {
         boolean areFilesConfigurated=filesConfigurator.areFilesConfigurated();
         goBtn.setDisable(!areFilesConfigurated);
         chooseCsvBtn.setDisable(areFilesConfigurated);
-        chooseJsonBtn.setDisable(areFilesConfigurated);
         chooseLogBtn.setDisable(areFilesConfigurated);
     }
 }

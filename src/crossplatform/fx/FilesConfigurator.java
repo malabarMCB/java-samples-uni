@@ -22,7 +22,7 @@ public class FilesConfigurator {
     }
 
     public boolean areFilesConfigurated() {
-        return csvFile!=null && jsonFile!=null && logFile!=null;
+        return csvFile!=null && logFile!=null;
     }
 
 

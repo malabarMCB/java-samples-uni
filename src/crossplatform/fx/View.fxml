@@ -8,9 +8,9 @@
           fx:controller="crossplatform.fx.Controller">
 
     <Button fx:id="chooseCsvBtn" GridPane.rowIndex="1" text="Choose csv file" onAction="#chooseCsvFile"/>
-    <Button fx:id="chooseJsonBtn" GridPane.rowIndex="2" text="Choose json file" onAction="#chooseJsonFile"/>
-    <Button fx:id="chooseLogBtn" GridPane.rowIndex="3" text="Choose log file" onAction="#chooseLogFile"/>
-    <Button fx:id="goBtn" disable="true" GridPane.rowIndex="4" text="GO" onAction="#go"/>
+    <Button fx:id="chooseLogBtn" GridPane.rowIndex="2" text="Choose log file" onAction="#chooseLogFile"/>
+    <Button fx:id="goBtn" disable="true" GridPane.rowIndex="3" text="GO" onAction="#go"/>
+    <Button fx:id="chooseJsonBtn" disable="true" GridPane.rowIndex="4" text="Write to json file" onAction="#writeToJsonFile"/>
 
     <Label text="UDC :"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     <TextField fx:id="udc" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
@@ -41,7 +41,7 @@
     </FlowPane>
 
     <ScrollPane GridPane.columnIndex="2" GridPane.rowIndex="8">
-        <Text wrappingWidth="400" fx:id="logText"/>
+        <Text wrappingWidth="400" fx:id="dialogText"/>
     </ScrollPane>
 
 </GridPane>
