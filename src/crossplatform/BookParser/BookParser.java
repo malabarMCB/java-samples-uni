@@ -37,11 +37,11 @@ public class BookParser{
             throw new Exception(ERRORMESSAGE+bookStr);
         }
 
-        if(StringUtils.isBlank(book.udc) || StringUtils.isBlank(book.name)|| StringUtils.isBlank(book.author)
-                || book.instanceCount<0)
+        if(StringUtils.isBlank(book.getUdc()) || StringUtils.isBlank(book.getName())|| StringUtils.isBlank(book.getAuthor())
+                || book.getInstanceCount()<0)
             throw new Exception(ERRORMESSAGE+bookStr);
 
-        if(book.publishYear!=null && (book.publishYear> Year.now().getValue() || book.publishYear<0))
+        if(book.getPublishYear()!=null && (book.getPublishYear()> Year.now().getValue() || book.getPublishYear()<0))
             throw new Exception(ERRORMESSAGE+bookStr);
 
         return book;

@@ -30,11 +30,7 @@ public class IdentifiedBookRepository {
         for(int i=0;i<books.size();i++){
             IdentifiedBook currentBook=books.get(i);
             if(currentBook.id== book.id){
-                currentBook.udc=book.udc;
-                currentBook.name=book.name;
-                currentBook.author=book.author;
-                currentBook.publishYear=book.publishYear;
-                currentBook.instanceCount=book.instanceCount;
+                currentBook.setValues(book);
             }
         }
     }
@@ -55,13 +51,7 @@ public class IdentifiedBookRepository {
 
         books= new ArrayList<IdentifiedBook>();
         baseBooks.forEach(b->{
-            IdentifiedBook identifiedBook= new IdentifiedBook();
-            identifiedBook.udc=b.udc;
-            identifiedBook.author=b.author;
-            identifiedBook.name=b.name;
-            identifiedBook.publishYear=b.publishYear;
-            identifiedBook.instanceCount=b.instanceCount;
-
+            IdentifiedBook identifiedBook= new IdentifiedBook(b);
             books.add(identifiedBook);
         });
 

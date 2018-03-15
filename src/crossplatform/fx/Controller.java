@@ -47,7 +47,7 @@ public class Controller {
         bookRepository.readFromCsvFile(csvFilePath);
         getBook();
         goBtn.setDisable(true);
-    }
+}
 
     @FXML
     private void modify(ActionEvent actionEvent) {
@@ -110,11 +110,11 @@ public class Controller {
     }
 
     private void setCurrentBookFileds(){
-        udc.setText(currentBook.udc);
-        author.setText(currentBook.author);
-        name.setText(currentBook.name);
-        publishYear.setText(currentBook.publishYear==null?"":currentBook.publishYear.toString());
-        instanceCount.setText(Integer.toString(currentBook.instanceCount));
+        udc.setText(currentBook.getUdc());
+        author.setText(currentBook.getAuthor());
+        name.setText(currentBook.getName());
+        publishYear.setText(currentBook.getPublishYear()==null?"":currentBook.getPublishYear().toString());
+        instanceCount.setText(Integer.toString(currentBook.getInstanceCount()));
     }
 
     private void checkNavigationBtns(){
