@@ -62,6 +62,7 @@ public class Controller {
             currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
         } catch (Exception e) {
             logText.setText("Unable to modify book! "+e.getMessage());
+            logText.app
         }
 
         bookRepository.updateBook(currentBook);
@@ -132,6 +133,8 @@ public class Controller {
 
     private void checkNavigationBtns(){
         prevItemBtn.setDisable(currentBookNumber==0);
+        firstItemBtn.setDisable(currentBookNumber==0);
+        lastItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
         nextItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
     }
 
