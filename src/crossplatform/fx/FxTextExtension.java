@@ -1,5 +1,5 @@
 package crossplatform.fx;
-import javafx.scene.text.Text;
+        import javafx.scene.text.Text;
 
 public class FxTextExtension {
 

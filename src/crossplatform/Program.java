@@ -1,6 +1,6 @@
 package crossplatform;
 
-import crossplatform.BookParser.BookParserLoggable;
+import crossplatform.TicketParser.TicketParserLoggable;
 import crossplatform.Loggers.ConsoleLogger;
 import crossplatform.Loggers.FileLogger;
 import crossplatform.Loggers.ILog;
@@ -24,8 +24,8 @@ public class Program extends Application {
         ConsoleLogger consoleLogger= new ConsoleLogger();
         FileLogger fileLogger= new FileLogger();
         List<ILog> loggers= Arrays.asList(consoleLogger,fileLogger);
-        BookParserLoggable bookParser= new BookParserLoggable(loggers);
-        IdentifiedBookRepository bookRepository= new IdentifiedBookRepository(bookParser);
+        TicketParserLoggable TicketParser= new TicketParserLoggable(loggers);
+        IdentifiedTicketRepository TicketRepository= new IdentifiedTicketRepository(TicketParser);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fx/View.fxml"));
         Parent root=loader.load();
@@ -37,7 +37,7 @@ public class Program extends Application {
         FilesConfigurator filesConfigurator= new FilesConfigurator(new FileChooser(),stage,fileLogger);
 
         Controller controller=loader.getController();
-        controller.inject(filesConfigurator,bookRepository);
+        controller.inject(filesConfigurator,TicketRepository);
 
         stage.show();
     }

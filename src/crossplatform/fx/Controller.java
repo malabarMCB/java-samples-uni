@@ -1,29 +1,34 @@
 package crossplatform.fx;
 
-import crossplatform.Books.IdentifiedBook;
-import crossplatform.IdentifiedBookRepository;
+import crossplatform.Tickets.IdentifiedTicket;
+import crossplatform.IdentifiedTicketRepository;
+import crossplatform.Tickets.IdentifiedTicket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class Controller {
     private FilesConfigurator filesConfigurator;
-    private IdentifiedBookRepository bookRepository;
+    private IdentifiedTicketRepository TicketRepository;
 
-    private int currentBookNumber=0;
-    private  IdentifiedBook currentBook;
+    private int currentTicketNumber=0;
+    private IdentifiedTicket currentTicket;
 
     @FXML private Text dialogText;
     @FXML private Button modifyBtn;
 
-    //book fields
-    @FXML private TextField udc;
-    @FXML private TextField author;
-    @FXML private TextField name;
-    @FXML private TextField publishYear;
-    @FXML private TextField instanceCount;
+    //Ticket fields
+    @FXML private TextField numberOfTicket;
+    @FXML private TextField startPoint;
+    @FXML private TextField destination;
+    @FXML private TextField firstName;
+    @FXML private TextField lastName;
+    @FXML private TextField dateApply;
 
     //btns for files
     @FXML private Button chooseCsvBtn;
@@ -37,9 +42,9 @@ public class Controller {
     @FXML private Button nextItemBtn;
     @FXML private Button lastItemBtn;
 
-    public void inject(FilesConfigurator fileConfigurator, IdentifiedBookRepository bookRepository) {
+    public void inject(FilesConfigurator fileConfigurator, IdentifiedTicketRepository TicketRepository) {
         this.filesConfigurator = fileConfigurator;
-        this.bookRepository = bookRepository;
+        this.TicketRepository = TicketRepository;
     }
 
     @FXML
@@ -50,11 +55,11 @@ public class Controller {
     @FXML
     private void go(ActionEvent actionEvent){
         String csvFilePath=filesConfigurator.getCsvFilePath();
-        bookRepository.readFromCsvFile(csvFilePath);
+        TicketRepository.readFromCsvFile(csvFilePath);
         FxTextExtension.appendText(dialogText,"Data loaded!");
-        getBook();
+        getTicket();
         goBtn.setDisable(true);
-        if(bookRepository.getBooksCount()>0){
+        if(TicketRepository.getTicketsCount()>0){
             modifyBtn.setDisable(false);
             chooseJsonBtn.setDisable(false);
         }
@@ -66,41 +71,41 @@ public class Controller {
     @FXML
     private void modify(ActionEvent actionEvent) {
         try {
-            currentBook.setUdc(udc.getText());
-            currentBook.setAuthor(author.getText());
-            currentBook.setName(name.getText());
-            currentBook.setPublishYear(Short.parseShort(publishYear.getText()));
-            currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
+            currentTicket.setNumberOfTicket(numberOfTicket.getText());
+            currentTicket.setStartPoint(startPoint.getText());
+            currentTicket.setDestination(destination.getText());
+            currentTicket.setFirstName(firstName.getText());
+            currentTicket.setLastName(lastName.getText());
 
-            bookRepository.updateBook(currentBook);
-            FxTextExtension.appendText(dialogText,"Book updated. ID: "+currentBook.getId());
+            TicketRepository.updateTicket(currentTicket);
+            FxTextExtension.appendText(dialogText,"Ticket updated. ID: "+currentTicket.getId());
         } catch (Exception e) {
-            FxTextExtension.appendText(dialogText,"Unable to modify book! "+e.getMessage());
+            FxTextExtension.appendText(dialogText,"Unable to modify Ticket! "+e.getMessage());
         }
     }
 
     @FXML
     private void getFirstItem(ActionEvent actionEvent) {
-        currentBookNumber =0;
-        getBook();
+        currentTicketNumber =0;
+        getTicket();
     }
 
     @FXML
     private void getPrevItem(ActionEvent actionEvent) {
-        currentBookNumber--;
-        getBook();
+        currentTicketNumber--;
+        getTicket();
     }
 
     @FXML
     private void getNextItem(ActionEvent actionEvent) {
-        currentBookNumber++;
-        getBook();
+        currentTicketNumber++;
+        getTicket();
     }
 
     @FXML
     private void getLastItem(ActionEvent actionEvent) {
-        currentBookNumber =bookRepository.getBooksCount()-1;
-        getBook();
+        currentTicketNumber =TicketRepository.getTicketsCount()-1;
+        getTicket();
     }
 
     @FXML
@@ -121,29 +126,30 @@ public class Controller {
     private void writeToJsonFile(ActionEvent actionEvent){
         filesConfigurator.chooseJsonFile();
         String jsonFilePath=filesConfigurator.getJsonFilePath();
-        bookRepository.writeToFileAsJsonString(jsonFilePath);
+        TicketRepository.writeToFileAsJsonString(jsonFilePath);
         FxTextExtension.appendText(dialogText,"Collection was written to json");
     }
 
-    private void getBook(){
+    private void getTicket(){
         checkNavigationBtns();
-        currentBook=bookRepository.getBook(currentBookNumber);
-        setCurrentBookFileds();
+        currentTicket=TicketRepository.getTicket(currentTicketNumber);
+        setCurrentTicketFileds();
     }
 
-    private void setCurrentBookFileds(){
-        udc.setText(currentBook.getUdc());
-        author.setText(currentBook.getAuthor());
-        name.setText(currentBook.getName());
-        publishYear.setText(currentBook.getPublishYear()==null?"":currentBook.getPublishYear().toString());
-        instanceCount.setText(Integer.toString(currentBook.getInstanceCount()));
+    private void setCurrentTicketFileds(){
+        numberOfTicket.setText(currentTicket.getNumberOfTicket());
+        startPoint.setText(currentTicket.getStartPoint());
+        destination.setText(currentTicket.getDestination());
+        firstName.setText(currentTicket.getFirstName());
+        lastName.setText(currentTicket.getLastName());
+        dateApply.setText(currentTicket.getDateApply().toString());
     }
 
     private void checkNavigationBtns(){
-        prevItemBtn.setDisable(currentBookNumber==0);
-        firstItemBtn.setDisable(currentBookNumber==0);
-        lastItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
-        nextItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
+        prevItemBtn.setDisable(currentTicketNumber==0);
+        firstItemBtn.setDisable(currentTicketNumber==0);
+        lastItemBtn.setDisable(currentTicketNumber==TicketRepository.getTicketsCount()-1);
+        nextItemBtn.setDisable(currentTicketNumber==TicketRepository.getTicketsCount()-1);
     }
 
     private void checkFileBtns(){
