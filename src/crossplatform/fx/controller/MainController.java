@@ -1,18 +1,26 @@
 package crossplatform.fx.controller;
 
+import crossplatform.domainLogic.BookCSVReader;
+import crossplatform.domainLogic.IBookRepository;
 import crossplatform.domainLogic.book.IdentifiedBook;
 import crossplatform.IdentifiedBookRepository;
+import crossplatform.domainLogic.bookParser.BookParserLoggable;
 import crossplatform.fx.FilesConfigurator;
 import crossplatform.fx.FxTextExtension;
+import crossplatform.utils.FileUtil;
+import crossplatform.utils.JsonUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 public class MainController {
     private FilesConfigurator filesConfigurator;
-    private IdentifiedBookRepository bookRepository;
+    private IBookRepository bookRepository;
+    private BookCSVReader bookCSVReader;
 
     private int currentBookNumber=0;
     private  IdentifiedBook currentBook;
@@ -39,9 +47,10 @@ public class MainController {
     @FXML private Button nextItemBtn;
     @FXML private Button lastItemBtn;
 
-    public void inject(FilesConfigurator fileConfigurator, IdentifiedBookRepository bookRepository) {
+    public void inject(FilesConfigurator fileConfigurator, IBookRepository bookRepository,BookCSVReader bookCSVReader) {
         this.filesConfigurator = fileConfigurator;
         this.bookRepository = bookRepository;
+        this.bookCSVReader=bookCSVReader;
     }
 
     @FXML
@@ -52,7 +61,7 @@ public class MainController {
     @FXML
     private void go(ActionEvent actionEvent){
         String csvFilePath=filesConfigurator.getCsvFilePath();
-        bookRepository.readFromCsvFile(csvFilePath);
+        bookRepository.addRange(bookCSVReader.readBooks(csvFilePath));
         FxTextExtension.appendText(dialogText,"Data loaded!");
         getBook();
         goBtn.setDisable(true);
@@ -122,8 +131,13 @@ public class MainController {
     @FXML
     private void writeToJsonFile(ActionEvent actionEvent){
         filesConfigurator.chooseJsonFile();
+
+        List<IdentifiedBook> books= bookRepository.getAllBooks();
+        String jsonStr= JsonUtil.convertToJson(books);
+
         String jsonFilePath=filesConfigurator.getJsonFilePath();
-        bookRepository.writeToFileAsJsonString(jsonFilePath);
+        FileUtil.writeLine(jsonStr,jsonFilePath);
+
         FxTextExtension.appendText(dialogText,"Collection was written to json");
     }
 
