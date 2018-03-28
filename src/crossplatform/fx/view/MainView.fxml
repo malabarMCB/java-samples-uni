@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Text?>
 <GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
           xmlns:fx="http://javafx.com/fxml"
-          fx:mainController="crossplatform.fx.controller.MainController">
+          fx:controller="crossplatform.fx.controller.MainController">
 
     <Button fx:id="chooseCsvBtn" GridPane.rowIndex="1" text="Choose csv file" onAction="#chooseCsvFile"/>
     <Button fx:id="chooseLogBtn" GridPane.rowIndex="2" text="Choose log file" onAction="#chooseLogFile"/>
