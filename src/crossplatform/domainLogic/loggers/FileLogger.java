@@ -1,8 +1,6 @@
-package crossplatform.Loggers;
+package crossplatform.domainLogic.loggers;
 
-import crossplatform.FileUtil;
-
-import java.io.File;
+import crossplatform.utils.FileUtil;
 
 public class FileLogger implements ILog{
     private String file;

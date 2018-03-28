@@ -1,8 +1,10 @@
 package crossplatform;
 
-import crossplatform.BookParser.BookParserLoggable;
-import crossplatform.Books.Book;
-import crossplatform.Books.IdentifiedBook;
+import crossplatform.utils.FileUtil;
+import crossplatform.utils.JsonUtil;
+import crossplatform.domainLogic.bookParser.BookParserLoggable;
+import crossplatform.domainLogic.books.Book;
+import crossplatform.domainLogic.books.IdentifiedBook;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,7 +36,7 @@ public class IdentifiedBookRepository {
     }
 
     public void writeToFileAsJsonString(String filePath){
-        String jsonString=JsonUtil.convertToJson(books);
+        String jsonString= JsonUtil.convertToJson(books);
         FileUtil.writeLine(jsonString,filePath);
     }
 

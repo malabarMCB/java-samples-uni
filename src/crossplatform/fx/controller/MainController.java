@@ -1,14 +1,16 @@
-package crossplatform.fx;
+package crossplatform.fx.controller;
 
-import crossplatform.Books.IdentifiedBook;
+import crossplatform.domainLogic.books.IdentifiedBook;
 import crossplatform.IdentifiedBookRepository;
+import crossplatform.fx.FilesConfigurator;
+import crossplatform.fx.FxTextExtension;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class Controller {
+public class MainController {
     private FilesConfigurator filesConfigurator;
     private IdentifiedBookRepository bookRepository;
 

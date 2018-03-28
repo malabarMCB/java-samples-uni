@@ -1,7 +1,7 @@
-package crossplatform.BookParser;
+package crossplatform.domainLogic.bookParser;
 
-import crossplatform.Books.Book;
-import crossplatform.Loggers.ILog;
+import crossplatform.domainLogic.books.Book;
+import crossplatform.domainLogic.loggers.ILog;
 
 import java.util.List;
 

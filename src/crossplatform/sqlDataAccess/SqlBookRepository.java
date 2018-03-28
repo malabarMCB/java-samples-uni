@@ -1,7 +1,7 @@
 package crossplatform.sqlDataAccess;
 
-import crossplatform.Books.IdentifiedBook;
-import crossplatform.IBookRepository;
+import crossplatform.domainLogic.books.IdentifiedBook;
+import crossplatform.domainLogic.IBookRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package crossplatform.Books;
+package crossplatform.domainLogic.books;
 
 import org.apache.commons.lang3.StringUtils;
 

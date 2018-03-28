@@ -1,6 +1,6 @@
-package crossplatform;
+package crossplatform.domainLogic;
 
-import crossplatform.Books.IdentifiedBook;
+import crossplatform.domainLogic.books.IdentifiedBook;
 
 import java.util.List;
 

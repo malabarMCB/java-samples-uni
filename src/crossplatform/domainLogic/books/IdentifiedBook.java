@@ -1,4 +1,4 @@
-package crossplatform.Books;
+package crossplatform.domainLogic.books;
 
 public class IdentifiedBook extends Book implements Comparable<IdentifiedBook>{
     private static int _counter;

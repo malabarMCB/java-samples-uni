@@ -1,15 +1,13 @@
 package crossplatform;
 
-import crossplatform.BookParser.BookParserLoggable;
-import crossplatform.Books.IdentifiedBook;
-import crossplatform.Loggers.ConsoleLogger;
-import crossplatform.Loggers.FileLogger;
-import crossplatform.Loggers.ILog;
-import crossplatform.fx.Controller;
+import crossplatform.domainLogic.bookParser.BookParserLoggable;
+import crossplatform.domainLogic.books.IdentifiedBook;
+import crossplatform.domainLogic.loggers.ConsoleLogger;
+import crossplatform.domainLogic.loggers.FileLogger;
+import crossplatform.domainLogic.loggers.ILog;
+import crossplatform.fx.controller.MainController;
 import crossplatform.fx.FilesConfigurator;
 import crossplatform.sqlDataAccess.SqlBookRepository;
-import crossplatform.sqlDataAccess.SqlQueryExecutor;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,10 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +29,7 @@ public class Program /*extends Application*/ {
         BookParserLoggable bookParser= new BookParserLoggable(loggers);
         IdentifiedBookRepository bookRepository= new IdentifiedBookRepository(bookParser);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fx/View.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fx/view/MainView.fxml"));
         Parent root=loader.load();
         Scene scene = new Scene(root, 900, 500);
 
@@ -44,8 +38,8 @@ public class Program /*extends Application*/ {
 
         FilesConfigurator filesConfigurator= new FilesConfigurator(new FileChooser(),stage,fileLogger);
 
-        Controller controller=loader.getController();
-        controller.inject(filesConfigurator,bookRepository);
+        MainController mainController =loader.getController();
+        mainController.inject(filesConfigurator,bookRepository);
 
         stage.show();
     }
@@ -66,14 +60,14 @@ public class Program /*extends Application*/ {
         SqlBookRepository repository=new SqlBookRepository(connectionString);
 
 
-        IdentifiedBook bookToInsert= new IdentifiedBook(2);
+/*        IdentifiedBook bookToInsert= new IdentifiedBook(2);
         bookToInsert.setUdc("sdfsdfsf");
         bookToInsert.setAuthor("auth");
         bookToInsert.setName("somename");
         Short val=5;
         bookToInsert.setPublishYear(val);
         bookToInsert.setInstanceCount(4);
-        repository.add(bookToInsert);
+        repository.add(bookToInsert);*/
 
         /*repository.deleteBook(2);*/
 
