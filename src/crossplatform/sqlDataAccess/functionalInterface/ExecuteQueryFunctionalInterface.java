@@ -1,4 +1,4 @@
-package crossplatform.sqlDataAccess.functionalInterfaces;
+package crossplatform.sqlDataAccess.functionalInterface;
 
 import java.sql.Connection;
 

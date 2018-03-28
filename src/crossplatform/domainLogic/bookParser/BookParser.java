@@ -2,7 +2,7 @@ package crossplatform.domainLogic.bookParser;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import crossplatform.domainLogic.books.Book;
+import crossplatform.domainLogic.book.Book;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.Year;

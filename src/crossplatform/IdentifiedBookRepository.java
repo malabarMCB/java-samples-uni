@@ -3,8 +3,8 @@ package crossplatform;
 import crossplatform.utils.FileUtil;
 import crossplatform.utils.JsonUtil;
 import crossplatform.domainLogic.bookParser.BookParserLoggable;
-import crossplatform.domainLogic.books.Book;
-import crossplatform.domainLogic.books.IdentifiedBook;
+import crossplatform.domainLogic.book.Book;
+import crossplatform.domainLogic.book.IdentifiedBook;
 
 import java.util.ArrayList;
 import java.util.Comparator;

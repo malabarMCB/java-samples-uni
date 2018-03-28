@@ -1,10 +1,10 @@
 package crossplatform;
 
 import crossplatform.domainLogic.bookParser.BookParserLoggable;
-import crossplatform.domainLogic.books.IdentifiedBook;
-import crossplatform.domainLogic.loggers.ConsoleLogger;
-import crossplatform.domainLogic.loggers.FileLogger;
-import crossplatform.domainLogic.loggers.ILog;
+import crossplatform.domainLogic.book.IdentifiedBook;
+import crossplatform.domainLogic.logger.ConsoleLogger;
+import crossplatform.domainLogic.logger.FileLogger;
+import crossplatform.domainLogic.logger.ILog;
 import crossplatform.fx.controller.MainController;
 import crossplatform.fx.FilesConfigurator;
 import crossplatform.sqlDataAccess.SqlBookRepository;

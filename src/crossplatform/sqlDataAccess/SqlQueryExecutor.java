@@ -1,6 +1,6 @@
 package crossplatform.sqlDataAccess;
 
-import crossplatform.sqlDataAccess.functionalInterfaces.ExecuteQueryFunctionalInterface;
+import crossplatform.sqlDataAccess.functionalInterface.ExecuteQueryFunctionalInterface;
 
 import java.sql.*;
 

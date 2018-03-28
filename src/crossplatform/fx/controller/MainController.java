@@ -1,6 +1,6 @@
 package crossplatform.fx.controller;
 
-import crossplatform.domainLogic.books.IdentifiedBook;
+import crossplatform.domainLogic.book.IdentifiedBook;
 import crossplatform.IdentifiedBookRepository;
 import crossplatform.fx.FilesConfigurator;
 import crossplatform.fx.FxTextExtension;

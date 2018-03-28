@@ -1,6 +1,6 @@
 package crossplatform.fx;
 
-import crossplatform.domainLogic.loggers.FileLogger;
+import crossplatform.domainLogic.logger.FileLogger;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 

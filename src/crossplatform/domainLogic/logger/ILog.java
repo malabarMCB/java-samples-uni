@@ -1,4 +1,4 @@
-package crossplatform.domainLogic.loggers;
+package crossplatform.domainLogic.logger;
 
 public interface ILog{
     /**
