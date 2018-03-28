@@ -9,6 +9,10 @@ public class IdentifiedBook extends Book implements Comparable<IdentifiedBook>{
         id= _counter;
     }
 
+    public IdentifiedBook(int id){
+        this.id=id;
+    }
+
     public IdentifiedBook(Book book){
         this();
         setValues(book);
