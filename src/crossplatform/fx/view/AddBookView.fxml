@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="crossplatform.fx.controller.AddBookController"
+          prefHeight="400.0" prefWidth="600.0">
+
+    <Label text="UDC :"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="udc" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+    <Label text="Author :"  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="author" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+    <Label text="Name :"  GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <TextField fx:id="name" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+    <Label text="Publish year :"  GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <TextField fx:id="publishYear" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+
+    <Label text="Instance count :"  GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <TextField fx:id="instanceCount" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+
+    <HBox spacing="10" alignment="bottom_left"
+          GridPane.columnIndex="2" GridPane.rowIndex="6">
+        <Button disable="true" text="Modify"
+                onAction="#add"/>
+    </HBox>
+
+    <ScrollPane GridPane.columnIndex="2" GridPane.rowIndex="8">
+        <Text wrappingWidth="400" fx:id="dialogText"/>
+    </ScrollPane>
+
+</GridPane>
