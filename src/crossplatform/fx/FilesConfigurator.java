@@ -22,9 +22,8 @@ public class FilesConfigurator {
     }
 
     public boolean areFilesConfigurated() {
-        return csvFile!=null && logFile!=null;
+        return logFile!=null;
     }
-
 
     public void chooseCsvFile(){
         csvFile=fileChooser.showOpenDialog(stage);

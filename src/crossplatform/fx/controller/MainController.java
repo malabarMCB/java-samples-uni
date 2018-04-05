@@ -3,10 +3,10 @@ package crossplatform.fx.controller;
 import crossplatform.domainLogic.BookCSVReader;
 import crossplatform.domainLogic.IBookRepository;
 import crossplatform.domainLogic.book.IdentifiedBook;
-import crossplatform.IdentifiedBookRepository;
-import crossplatform.domainLogic.bookParser.BookParserLoggable;
 import crossplatform.fx.FilesConfigurator;
 import crossplatform.fx.FxTextExtension;
+import crossplatform.fx.WindowFactory;
+import crossplatform.fx.functionalInterface.RecreateDatabaseFunctionalInterface;
 import crossplatform.utils.FileUtil;
 import crossplatform.utils.JsonUtil;
 import javafx.event.ActionEvent;
@@ -21,6 +21,8 @@ public class MainController {
     private FilesConfigurator filesConfigurator;
     private IBookRepository bookRepository;
     private BookCSVReader bookCSVReader;
+    private WindowFactory windowFactory;
+    private RecreateDatabaseFunctionalInterface recreateDatabase;
 
     private int currentBookNumber=0;
     private  IdentifiedBook currentBook;
@@ -47,10 +49,12 @@ public class MainController {
     @FXML private Button nextItemBtn;
     @FXML private Button lastItemBtn;
 
-    public void inject(FilesConfigurator fileConfigurator, IBookRepository bookRepository,BookCSVReader bookCSVReader) {
-        this.filesConfigurator = fileConfigurator;
+    public void inject(FilesConfigurator filesConfigurator, IBookRepository bookRepository, BookCSVReader bookCSVReader, WindowFactory windowFactory, RecreateDatabaseFunctionalInterface recreateDatabase) {
+        this.filesConfigurator = filesConfigurator;
         this.bookRepository = bookRepository;
-        this.bookCSVReader=bookCSVReader;
+        this.bookCSVReader = bookCSVReader;
+        this.windowFactory = windowFactory;
+        this.recreateDatabase = recreateDatabase;
     }
 
     @FXML
@@ -167,5 +171,23 @@ public class MainController {
         goBtn.setDisable(!areFilesConfigurated);
         chooseCsvBtn.setDisable(areFilesConfigurated);
         chooseLogBtn.setDisable(areFilesConfigurated);
+    }
+
+    public void addBook(ActionEvent actionEvent) {
+        windowFactory.createAddBookWindow();
+    }
+
+    public void recreateDatabase(ActionEvent actionEvent) {
+        recreateDatabase.run();
+        FxTextExtension.appendText(dialogText,"Database recreated");
+    }
+
+    public void deleteBook(ActionEvent actionEvent) {
+        bookRepository.deleteBook(currentBook.getId());
+        FxTextExtension.appendText(dialogText,"Book deleted");
+    }
+
+    public void showJournal(ActionEvent actionEvent) {
+        windowFactory.createJournalWindow();
     }
 }

@@ -29,7 +29,7 @@
 
     <HBox spacing="10" alignment="bottom_left"
           GridPane.columnIndex="2" GridPane.rowIndex="6">
-        <Button disable="true" text="Modify"
+        <Button  text="Add"
                 onAction="#add"/>
     </HBox>
 
