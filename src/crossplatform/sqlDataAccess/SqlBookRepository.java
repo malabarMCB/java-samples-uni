@@ -56,6 +56,8 @@ public class SqlBookRepository implements IBookRepository {
     @Override
     public IdentifiedBook getBook(int index) {
         List<IdentifiedBook> books=getAllBooks();
+        if(getBooksCount()<=index)
+            return null;
         return  books.get(index);
     }
 

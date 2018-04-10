@@ -18,17 +18,24 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 public class MainController {
+    //incoming dependencies
     private FilesConfigurator filesConfigurator;
     private IBookRepository bookRepository;
     private BookCSVReader bookCSVReader;
     private WindowFactory windowFactory;
     private RecreateDatabaseFunctionalInterface recreateDatabase;
 
-    private int currentBookNumber=0;
+    //fields for paging
+    private int currentBookNumber;
     private  IdentifiedBook currentBook;
 
+    //fxml fields
+
     @FXML private Text dialogText;
+
     @FXML private Button modifyBtn;
+    @FXML private Button addBtn;
+    @FXML private Button deleteBtn;
 
     //book fields
     @FXML private TextField udc;
@@ -38,10 +45,12 @@ public class MainController {
     @FXML private TextField instanceCount;
 
     //btns for files
-    @FXML private Button chooseCsvBtn;
+    @FXML private Button csvLoadBtn;
     @FXML private Button chooseJsonBtn;
     @FXML private Button chooseLogBtn;
     @FXML private Button goBtn;
+    @FXML private Button showJournalBtn;
+    @FXML private Button recreateDatabaseBtn;
 
     //paging btns
     @FXML private Button firstItemBtn;
@@ -59,41 +68,19 @@ public class MainController {
 
     @FXML
     private void initialize(){
-        dialogText.setText("Choose csv and log files to start");
+        dialogText.setText("Choose log file to start");
     }
 
     @FXML
     private void go(ActionEvent actionEvent){
-        String csvFilePath=filesConfigurator.getCsvFilePath();
-        bookRepository.addRange(bookCSVReader.readBooks(csvFilePath));
-        FxTextExtension.appendText(dialogText,"Data loaded!");
+        currentBookNumber=0;
         getBook();
-        goBtn.setDisable(true);
-        if(bookRepository.getBooksCount()>0){
-            modifyBtn.setDisable(false);
-            chooseJsonBtn.setDisable(false);
-        }
-        else{
-            FxTextExtension.appendText(dialogText,"Collection is empty!");
-        }
+        modifyBtn.setDisable(false);
+        addBtn.setDisable(false);
+        deleteBtn.setDisable(false);
     }
 
-    @FXML
-    private void modify(ActionEvent actionEvent) {
-        try {
-            currentBook.setUdc(udc.getText());
-            currentBook.setAuthor(author.getText());
-            currentBook.setName(name.getText());
-            currentBook.setPublishYear(Short.parseShort(publishYear.getText()));
-            currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
-
-            bookRepository.updateBook(currentBook);
-            FxTextExtension.appendText(dialogText,"Book updated. ID: "+currentBook.getId());
-        } catch (Exception e) {
-            FxTextExtension.appendText(dialogText,"Unable to modify book! "+e.getMessage());
-        }
-    }
-
+    //region paging actions
     @FXML
     private void getFirstItem(ActionEvent actionEvent) {
         currentBookNumber =0;
@@ -117,19 +104,22 @@ public class MainController {
         currentBookNumber =bookRepository.getBooksCount()-1;
         getBook();
     }
-
-    @FXML
-    private void chooseCsvFile(ActionEvent actionEvent) {
-        filesConfigurator.chooseCsvFile();
-        checkFileBtns();
-        FxTextExtension.appendText(dialogText,"CSV file was choosen");
-    }
+    //endregion
 
     @FXML
     private void chooseLogFile(ActionEvent actionEvent) {
         filesConfigurator.chooseLogFile();
         checkFileBtns();
         FxTextExtension.appendText(dialogText,"Log file was choosen");
+    }
+
+    @FXML
+    private void loadFromCsvFile(ActionEvent actionEvent) {
+        filesConfigurator.chooseCsvFile();
+        String csvFilePath=filesConfigurator.getCsvFilePath();
+        bookRepository.addRange(bookCSVReader.readBooks(csvFilePath));
+        checkFileBtns();
+        FxTextExtension.appendText(dialogText,"CSV file was choosen");
     }
 
     @FXML
@@ -145,6 +135,20 @@ public class MainController {
         FxTextExtension.appendText(dialogText,"Collection was written to json");
     }
 
+    @FXML
+    private void recreateDatabase(ActionEvent actionEvent) {
+        recreateDatabase.run();
+        currentBook=null;
+        currentBookNumber=0;
+        checkNavigationBtns();
+        FxTextExtension.appendText(dialogText,"Database recreated");
+    }
+
+    @FXML
+    private void showJournal(ActionEvent actionEvent) {
+        windowFactory.createJournalWindow();
+    }
+
     private void getBook(){
         checkNavigationBtns();
         currentBook=bookRepository.getBook(currentBookNumber);
@@ -152,42 +156,74 @@ public class MainController {
     }
 
     private void setCurrentBookFileds(){
-        udc.setText(currentBook.getUdc());
-        author.setText(currentBook.getAuthor());
-        name.setText(currentBook.getName());
-        publishYear.setText(currentBook.getPublishYear()==null?"":currentBook.getPublishYear().toString());
-        instanceCount.setText(Integer.toString(currentBook.getInstanceCount()));
+        if(currentBook==null){
+            udc.setText("");
+            author.setText("");
+            name.setText("");
+            publishYear.setText("");
+            instanceCount.setText("");
+        }
+        else{
+            udc.setText(currentBook.getUdc());
+            author.setText(currentBook.getAuthor());
+            name.setText(currentBook.getName());
+            publishYear.setText(currentBook.getPublishYear()==null?"":currentBook.getPublishYear().toString());
+            instanceCount.setText(Integer.toString(currentBook.getInstanceCount()));
+        }
     }
 
     private void checkNavigationBtns(){
         prevItemBtn.setDisable(currentBookNumber==0);
         firstItemBtn.setDisable(currentBookNumber==0);
-        lastItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
-        nextItemBtn.setDisable(currentBookNumber==bookRepository.getBooksCount()-1);
+        lastItemBtn.setDisable(currentBookNumber>=bookRepository.getBooksCount()-1);
+        nextItemBtn.setDisable(currentBookNumber>=bookRepository.getBooksCount()-1);
     }
 
     private void checkFileBtns(){
         boolean areFilesConfigurated=filesConfigurator.areFilesConfigurated();
-        goBtn.setDisable(!areFilesConfigurated);
-        chooseCsvBtn.setDisable(areFilesConfigurated);
+
         chooseLogBtn.setDisable(areFilesConfigurated);
+
+        csvLoadBtn.setDisable(!areFilesConfigurated);
+        goBtn.setDisable(!areFilesConfigurated);
+        recreateDatabaseBtn.setDisable(!areFilesConfigurated);
+        showJournalBtn.setDisable(!areFilesConfigurated);
+        chooseJsonBtn.setDisable(!areFilesConfigurated);
     }
 
-    public void addBook(ActionEvent actionEvent) {
+    //region create-update-delete
+    @FXML
+    private void addBook(ActionEvent actionEvent) {
         windowFactory.createAddBookWindow();
     }
 
-    public void recreateDatabase(ActionEvent actionEvent) {
-        recreateDatabase.run();
-        FxTextExtension.appendText(dialogText,"Database recreated");
-    }
-
-    public void deleteBook(ActionEvent actionEvent) {
+    @FXML
+    private void deleteBook(ActionEvent actionEvent) {
+        if(currentBook==null)
+            return;
         bookRepository.deleteBook(currentBook.getId());
+        currentBookNumber=currentBookNumber==0?0:currentBookNumber-1;
+        getBook();
         FxTextExtension.appendText(dialogText,"Book deleted");
     }
 
-    public void showJournal(ActionEvent actionEvent) {
-        windowFactory.createJournalWindow();
+    @FXML
+    private void modify(ActionEvent actionEvent) {
+        if(currentBook==null)
+            return;
+
+        try {
+            currentBook.setUdc(udc.getText());
+            currentBook.setAuthor(author.getText());
+            currentBook.setName(name.getText());
+            currentBook.setPublishYear(Short.parseShort(publishYear.getText()));
+            currentBook.setInstanceCount(Integer.parseInt(instanceCount.getText()));
+
+            bookRepository.updateBook(currentBook);
+            FxTextExtension.appendText(dialogText,"Book updated. ID: "+currentBook.getId());
+        } catch (Exception e) {
+            FxTextExtension.appendText(dialogText,"Unable to modify book! "+e.getMessage());
+        }
     }
+    //endregion
 }

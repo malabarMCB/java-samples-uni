@@ -7,12 +7,12 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="crossplatform.fx.controller.MainController">
 
-    <Button fx:id="chooseCsvBtn" GridPane.rowIndex="1" text="Add books from csv" onAction="#chooseCsvFile"/>
+    <Button fx:id="csvLoadBtn" disable="true" GridPane.rowIndex="1" text="Add books from csv" onAction="#loadFromCsvFile"/>
     <Button fx:id="chooseLogBtn" GridPane.rowIndex="2" text="Choose log file" onAction="#chooseLogFile"/>
     <Button fx:id="goBtn" disable="true" GridPane.rowIndex="3" text="GO" onAction="#go"/>
     <Button fx:id="chooseJsonBtn" disable="true" GridPane.rowIndex="4" text="Write to json file" onAction="#writeToJsonFile"/>
-    <Button  GridPane.rowIndex="5" text="Recreate database" onAction="#recreateDatabase"/>
-    <Button  GridPane.rowIndex="6" text="Show journal" onAction="#showJournal"/>
+    <Button fx:id="recreateDatabaseBtn" GridPane.rowIndex="5" disable="true" text="Recreate database" onAction="#recreateDatabase"/>
+    <Button fx:id="showJournalBtn" GridPane.rowIndex="6" disable="true" text="Show journal" onAction="#showJournal"/>
 
     <Label text="UDC :"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     <TextField fx:id="udc" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
@@ -31,10 +31,9 @@
 
     <HBox spacing="10" alignment="bottom_right"
           GridPane.columnIndex="2" GridPane.rowIndex="6">
-        <Button text="Add book" onAction="#addBook"/>
-        <Button text="Delete book" onAction="#deleteBook"/>
-        <Button fx:id="modifyBtn" disable="true" text="Modify"
-                onAction="#modify"/>
+        <Button fx:id="addBtn" text="Add book" disable="true" onAction="#addBook"/>
+        <Button fx:id="deleteBtn" text="Delete book" disable="true" onAction="#deleteBook"/>
+        <Button fx:id="modifyBtn" disable="true" text="Modify" onAction="#modify"/>
     </HBox>
 
     <FlowPane GridPane.columnIndex="2" GridPane.rowIndex="7" alignment="bottom_center">
